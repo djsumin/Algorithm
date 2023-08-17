@@ -13,7 +13,7 @@ public class Main {
 			for (int j = x; j < x + 10; j++) {
 				for (int k = y; k < y + 10; k++) {
 					array[j][k] = 1;
-				}
+				}//색종이 값을 다 1로 배열을 채워준다.
 			}
 		} // 좌표 입력받기
 
@@ -21,7 +21,7 @@ public class Main {
 			for (int j = 0; j < 100; j++) {
 				if (array[i][j] == 1) {
 					cnt++;
-				}
+				} //1의 개수를 세자
 			}
 		}
 		System.out.println(cnt);
