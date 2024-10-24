@@ -1,63 +1,63 @@
+
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-	static int N;
-	static int M;
-	static int[][] maze;
-	static int cnt;
-	static boolean[][] visited;
-	
+    static int[] dr = {-1,0,1,0};
+    static int[] dc = {0,1,0,-1};
+    static int[][] map;
+    static boolean[][] visited;
+    static int n, m;
+    public static void main(String[] args) throws Exception {
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       StringTokenizer st = new StringTokenizer(br.readLine());
+       n = Integer.parseInt(st.nextToken());
+       m = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+       map = new int[n][m];
+       visited = new boolean[n][m];
 
-		maze = new int[N][M];
-		visited = new boolean[N][M];
-		
-		for (int i = 0; i < N; i++) {
-			String[] str = br.readLine().split("");
-			for (int j = 0; j < M; j++) {
-				maze[i][j] = Integer.parseInt(str[j]);
-			}
+       for(int i = 0; i < n; i++) {
+           String line = br.readLine();
+           for(int j = 0; j < m; j++) {
+               map[i][j] = line.charAt(j) - '0';
+           }
+       }
 
-		} // 입력완
-//		System.out.println(Arrays.deepToString(maze));
-		visited[0][0] = true;
-		bfs(0, 0);
-		System.out.println(maze[N-1][M-1]);
-	}
+       int start_r = 0;
+       int start_c = 0;
 
-	private static void bfs(int r, int c) {
-		Queue<int[]> queue = new LinkedList<>();
-		queue.add(new int[] {r, c});
-		
-		while(!queue.isEmpty()) {
-			int [] arr = queue.poll();
-			int x = arr[0];
-			int y = arr[1];
-			for (int i = 0; i < 4; i++) {
-				// 상우하좌
-				int[] dr = { -1, 0, 1, 0 };
-				int[] dc = { 0, 1, 0, -1 };
-				int nr = x + dr[i];
-				int nc = y + dc[i];
-				if (nr >= 0 && nr < N && nc >= 0 && nc < M) {
-					if (!visited[nr][nc]&& maze[nr][nc] == 1) {
-						queue.add(new int[] {nr, nc});
-						maze[nr][nc] = maze[x][y] + 1;
-						visited[nr][nc]=true;
-					}
-				}
-			}
-		}
-		
-	}
+       bfs(start_r, start_c);
+       System.out.println(map[n-1][m-1]);
+
+    }
+
+    private static void bfs(int r, int c) {
+        Queue<int[]> q = new LinkedList<>();
+        visited[r][c] = true;
+        q.add(new int[]{r,c});
+
+        while(!q.isEmpty()) {
+            int[] start = q.poll();
+
+            int x = start[0];
+            int y = start[1];
+
+            for(int d=0;d<4;d++){
+                int nr = x + dr[d];
+                int nc = y + dc[d];
+                if(nr >= 0 && nc >= 0 && nr < n && nc < m){
+                    if(!visited[nr][nc] && map[nr][nc] == 1){
+                        q.add(new int[]{nr,nc});
+                        visited[nr][nc] = true;
+                        map[nr][nc] = map[x][y] + 1;
+                    }
+                }
+            }
+
+        }
+
+    }
 }
