@@ -1,17 +1,15 @@
 import java.util.*;
-import java.io.*;
 
 class Solution {
     public long solution(int a, int b) {
         long answer = 0;
-            
-        if(a>b){            
+        if(a > b){
             for(int i=b;i<=a;i++){
-                answer+=i;
+                answer += i;
             }
-        }else{
+        } else{
             for(int i=a;i<=b;i++){
-                answer+=i;
+                answer += i;
             }
         }
         
